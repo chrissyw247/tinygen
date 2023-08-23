@@ -14,5 +14,4 @@ async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
 
     diff_string = generate_operation.main(repo_url, prompt)
 
-    # TODO: actually do something with the input
     return diff_string

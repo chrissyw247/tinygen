@@ -6,6 +6,7 @@ sys.path.append('..')
 from utils.github_helper import clone_repo, checkout_branch, commit_changes, get_diff_string
 from llm.basic_model import generate_code_changes
 
+# TODO: serve the backend public/live
 TEMP_REPO_DIR="temp_repo"
 DEV_BRANCH_NAME="new_branch"
 # TODO: make it work for multiple files
@@ -19,7 +20,6 @@ def main(repo_url, prompt):
         source_code = f.read()
 
     generated_code = generate_code_changes(prompt, source_code)
-    # TODO: after LLM is created, write generated_code_changes instead of these mock ones
     with open(SOURCE_CODE, "w") as f:
         f.write(generated_code)
 
