@@ -11,7 +11,7 @@ def checkout_branch(branch_name):
 
 def commit_changes(commit_message):
     subprocess.run("git add .", shell=True, check=True)
-    subprocess.run(f"git commit -m '{commit_message}'", shell=True, check=True)
+    subprocess.run(f"git commit -m '{commit_message}'", shell=True, check=False)
 
 def get_diff_string(src_branch, dest_branch):
     result = subprocess.run(f"git diff {src_branch}..{dest_branch}", shell=True, check=True, capture_output=True, text=True)
