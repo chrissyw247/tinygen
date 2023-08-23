@@ -8,10 +8,9 @@ def collect_source_code(repo_dir):
             dirs.remove('.git')
 
         for file in files:
-            # NOTE: Skip .gitignore file
+            # TODO: Ideally don't skip .gitignore file. Was getting weird behavior where generated code always inserted in .gitignore
             if file == ".gitignore":
                 continue
-            print(file)
             file_path = os.path.join(root, file)
             with open(file_path, 'r') as f:
                 content = f.read()
