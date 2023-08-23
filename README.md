@@ -2,7 +2,7 @@
 
 ## Description
 
-Baby gen 🐣
+Baby gen!
 
 ## Installation
 
@@ -10,7 +10,7 @@ Baby gen 🐣
     ```
     git clone [repository-url]
     ```
-    
+
 2. Navigate to the project directory and activate a virtual environment:
     ```bash
     cd my-python-project
