@@ -1,21 +1,19 @@
 import subprocess
 import os
 import sys
-sys.path.append('../')
+sys.path.append('..')
 from utils.github_helper import clone_repo, checkout_branch, commit_changes, get_diff_string
+from llm.base_model import respond_to_prompt
 
 TEMP_REPO_DIR="temp_repo"
 DEV_BRANCH_NAME="new_branch"
 
-# TODO: move this to server instead, save this file for LLM logic
-def generate_diff(repo_url, prompt):
+def main(repo_url, prompt):
     clone_repo(repo_url, TEMP_REPO_DIR)
     checkout_branch(DEV_BRANCH_NAME)
 
-    # Step 3: Modify the code based on the prompt (This is a placeholder)
-    # Here, you would typically analyze the 'prompt' and make code changes accordingly.
-    # For demonstration, let's just append the prompt to the README.md file
-    # TODO: use actual LLM
+    generated_changes = respond_to_prompt(prompt)
+    # TODO: after LLM is created, write generated changes instead of these mock ones
     with open("README.md", "a") as f:
         f.write("\n")
         f.write(prompt)
