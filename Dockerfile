@@ -7,6 +7,11 @@ RUN apt-get update && apt-get install -y git
 # Set the working directory inside the container
 WORKDIR /app
 
+# NOTE: set-up username + email b/c github needs them when making a new commit
+# Set Git credentials
+RUN git config --global user.name "FooBar"
+RUN git config --global user.email "foobar@example.com"
+
 # Copy the requirements file into the container
 COPY requirements.txt .
 
