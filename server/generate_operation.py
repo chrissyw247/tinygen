@@ -1,22 +1,27 @@
+from datetime import datetime
 import subprocess
 import os
 import sys
 sys.path.append('..')
 from utils.github_helper import clone_repo, checkout_branch, commit_changes, get_diff_string
-from llm.base_model import respond_to_prompt
+from llm.basic_model import generate_code_changes
 
 TEMP_REPO_DIR="temp_repo"
 DEV_BRANCH_NAME="new_branch"
+# TODO: make it work for multiple files
+SOURCE_CODE="inputs/main.py"
 
 def main(repo_url, prompt):
-    clone_repo(repo_url, TEMP_REPO_DIR)
+    current_datetime = datetime.now().strftime('%Y%m%d%H%M%S')
+    clone_repo(repo_url, f"{TEMP_REPO_DIR}_{current_datetime}")
     checkout_branch(DEV_BRANCH_NAME)
+    with open(SOURCE_CODE, 'r') as f:
+        source_code = f.read()
 
-    generated_changes = respond_to_prompt(prompt)
-    # TODO: after LLM is created, write generated changes instead of these mock ones
-    with open("README.md", "a") as f:
-        f.write("\n")
-        f.write(prompt)
+    generated_code = generate_code_changes(prompt, source_code)
+    # TODO: after LLM is created, write generated_code_changes instead of these mock ones
+    with open(SOURCE_CODE, "w") as f:
+        f.write(generated_code)
 
     commit_changes("Modified based on prompt")
 
