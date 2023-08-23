@@ -3,10 +3,14 @@ import openai
 import os
 import json
 
+DELIMITER = "#######"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+def format_filename_heading(filename):
+    return f"{DELIMITER}{filename}{DELIMITER}"
+
 def format_source_code_str(source_code_dict):
-    source_code_str = "\n".join([f"{key}:\n{value}" for key, value in source_code_dict.items()])
+    source_code_str = "\n".join([f"{format_filename_heading(filename)}:\n{souce_code}" for filename, souce_code in source_code_dict.items()])
     return source_code_str
 
 def parse_source_code_str(source_code_str, filenames):
@@ -15,7 +19,7 @@ def parse_source_code_str(source_code_str, filenames):
 
     for filename in filenames:
         # Search for the filename in the source code string
-        start_pos = source_code_str.find(f"{filename}:", current_pos)
+        start_pos = source_code_str.find(f"{format_filename_heading(filename)}:", current_pos)
         if start_pos == -1:
             # Filename not found in the source code string
             continue
