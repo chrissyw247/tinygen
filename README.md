@@ -25,4 +25,7 @@ Baby gen 🐣
 
 ## Usage
 
-TODO
+1. Run server
+    ```bash
+    uvicorn server.main:app --reload
+    ```
