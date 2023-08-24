@@ -45,9 +45,8 @@ async def read_root(request: Request):
 
             <script>
                 async function fetchData() {
+                    # NOTE: clear existing response + show loading indicator
                     document.getElementById("apiResult").textContent = ""
-
-                    // Show the loading indicator
                     document.getElementById("loadingIndicator").style.display = "block";
 
                     const formData = new FormData();
@@ -61,9 +60,9 @@ async def read_root(request: Request):
 
                     const data = await res.json();
 
-                    // Hide the loading indicator
+                    // NOTE: clear loading indicator + display result
                     document.getElementById("loadingIndicator").style.display = "none";
-
+                    // TODO: display errors correctly
                     document.getElementById("apiResult").textContent = data
                 }
             </script>
