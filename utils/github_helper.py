@@ -20,7 +20,10 @@ def clone_repo(repo_url, repo_dir=None):
     os.chdir(repo_dir)
     return repo_dir
 
-def checkout_branch(branch_name):
+def checkout_branch(branch_name=None):
+    if not branch_name:
+        branch_name = DEV_BRANCH_NAME
+
     subprocess.run(f"git checkout -b {branch_name}", shell=True, check=True)
 
 def commit_changes(commit_message):
