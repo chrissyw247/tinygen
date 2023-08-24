@@ -25,7 +25,7 @@ Baby gen!
 
 ## Local development
 
-### Run backend in CLI
+### Run backend in CLI with live reload
 
 1. Set OPENAI_API_KEY envvar to your OpenAI API key
 

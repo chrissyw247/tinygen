@@ -3,11 +3,11 @@ import openai
 import os
 import json
 
-DELIMITER = "#######"
+FILE_HEADING = "##{}##"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def format_filename_heading(filename):
-    return f"{DELIMITER}{filename}{DELIMITER}"
+    return FILE_HEADING.format(filename)
 
 def format_source_code_str(source_code_dict):
     source_code_str = "\n".join([f"{format_filename_heading(filename)}:\n{souce_code}" for filename, souce_code in source_code_dict.items()])
