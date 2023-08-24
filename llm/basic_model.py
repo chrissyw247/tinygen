@@ -20,7 +20,7 @@ def parse_source_code_str(source_code_str, filenames):
 
     for filename in filenames:
         # Search for the filename in the source code string
-        start_pos = source_code_str.find(f"{format_filename_heading(filename)}:", current_pos)
+        start_pos = source_code_str.find(f"{format_filename_heading(filename)}:\n", current_pos)
         if start_pos == -1:
             # Filename not found in the source code string
             continue
@@ -31,12 +31,12 @@ def parse_source_code_str(source_code_str, filenames):
         # Find the next filename to get the ending position of the current file's content
         if filenames.index(filename) < len(filenames) - 1:
             next_filename = filenames[filenames.index(filename) + 1]
-            end_pos = source_code_str.find(f"{format_filename_heading(next_filename)}:", start_pos)
+            end_pos = source_code_str.find(f"{format_filename_heading(next_filename)}:\n", start_pos)
         else:
             end_pos = len(source_code_str)
 
         # Extract content and update the dictionary
-        content = source_code_str[start_pos:end_pos].strip()
+        content = source_code_str[start_pos:end_pos]
         source_code_dict[filename] = content
 
         # Update the current position for the next iteration
