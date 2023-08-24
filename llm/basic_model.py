@@ -3,6 +3,10 @@ import subprocess
 import openai
 import os
 import json
+import sys
+sys.path.append('..')
+from utils.file_io_helper import update_source_code
+from utils.github_helper import commit_changes, get_diff_string, DEV_BRANCH_NAME
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -62,8 +66,6 @@ def generate_code_changes(prompt, source_code_dict):
         raise HTTPException(status_code=400, detail="Github repo is too large :(")
 
     generated_code_str = response.choices[0].text
-    return generated_code_str
-
     filenames = list(source_code_dict.keys())
     generated_code_dict = parse_source_code_str(generated_code_str, filenames)
     return generated_code_dict
@@ -71,30 +73,32 @@ def generate_code_changes(prompt, source_code_dict):
 def generate_diff(prompt, source_code_dict):
     generated_code_dict = generate_code_changes(prompt, source_code_dict)
     update_source_code(generated_code_dict)
-
     commit_changes("Modified based on prompt")
 
     # TODO: handle when branch is "master" not main
     diff_string = get_diff_string("main", DEV_BRANCH_NAME)
+    return diff_string
 
 def generate_validated_diff(prompt, source_code_dict, num_validations=1):
     diff_string = generate_diff(prompt, source_code_dict)
 
     # Verify edits made by GPT
-    verify_generated_code(prompt, source_code_str, diff_string)
+    verify_generated_code(prompt, source_code_dict, diff_string)
 
     return diff_string
 
 def verify_generated_code(prompt, source_code_str, generated_diff):
     print(f"source_code_str: {source_code_str}")
-    print(f"generated_code_str: {generated_code_str}")
+    print(f"generated_diff: {generated_diff}")
 
     # response = openai.ChatCompletion.create(
     #     model="gpt-3.5-turbo",
     #     messages = [
-    #         {"role": "system", "content": f"{source_code_str}"},
+    #         {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
     #         {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
-    #     ]
+    #     ],
     #     temperature=0,
     #     max_tokens=1000
     # )
+
+    # print(f"response from chat completion: {json.dumps(response, indent=4)}")
