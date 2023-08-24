@@ -83,22 +83,30 @@ def generate_validated_diff(prompt, source_code_dict, num_validations=1):
     diff_string = generate_diff(prompt, source_code_dict)
 
     # Verify edits made by GPT
-    verify_generated_code(prompt, source_code_dict, diff_string)
+    verification_passed = verify_generated_code(prompt, source_code_dict, diff_string)
 
-    return diff_string
+    if (verification_passed):
+        print(f"Verification passed!!")
+        return diff_string
+    else:
+        # TODO: retry generation num_validations times
+        print(f"Verification failed! Returning empty diff.")
+        return ""
 
-def verify_generated_code(prompt, source_code_str, generated_diff):
-    print(f"source_code_str: {source_code_str}")
+def verify_generated_code(prompt, source_code_dict, generated_diff):
+    print(f"source_code_dict: {source_code_dict}")
     print(f"generated_diff: {generated_diff}")
 
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo",
-    #     messages = [
-    #         {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
-    #         {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
-    #     ],
-    #     temperature=0,
-    #     max_tokens=1000
-    # )
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages = [
+            {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
+            {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
+        ],
+        temperature=0,
+        max_tokens=1000
+    )
 
-    # print(f"response from chat completion: {json.dumps(response, indent=4)}")
+    assistant_message = response.choices[0].message.content
+    print(f"Assistant response: {assistant_message}")
+    return 'yes' in assistant_message.lower()
