@@ -5,7 +5,7 @@ import sys
 sys.path.append('..')
 from utils.github_helper import clone_repo, checkout_branch, commit_changes, get_diff_string
 from utils.file_io_helper import collect_source_code, update_source_code
-from llm.basic_model import format_source_code_str, generate_code_changes
+from llm.basic_model import format_source_code_str, generate_validated_code_changes
 from database.operations import write_to_db
 
 # TODO: serve the backend public/live
@@ -19,7 +19,7 @@ def main(repo_url, prompt):
 
     source_code_dict = collect_source_code("./")
 
-    generated_code_dict = generate_code_changes(prompt, source_code_dict)
+    generated_code_dict = generate_validated_code_changes(prompt, source_code_dict)
     update_source_code(generated_code_dict)
 
     commit_changes("Modified based on prompt")
