@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse
 from . import generate_operation
 import sys
 sys.path.append('..')
@@ -16,3 +17,42 @@ async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
     diff_string = generate_operation.main(repo_url, prompt)
 
     return diff_string
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    content = """
+    <html>
+        <head>
+            <title>TinyGen UI</title>
+        </head>
+        <body>
+            <form id="queryForm">
+                <label for="repoUrl">Repo URL:</label>
+                <input type="text" id="repoUrl" name="repoUrl" value="https://github.com/chrissyw247/tinygen"><br><br>
+
+                <label for="prompt">Prompt:</label>
+                <input type="text" id="prompt" name="prompt" value="Print goodbye world instead"><br><br>
+
+                <button type="button" onclick="fetchData()">Generate diff</button>
+            </form>
+            <pre id="apiResult"></pre>
+
+            <script>
+                async function fetchData() {
+                    const formData = new FormData();
+                    formData.append("repo_url", document.getElementById("repoUrl").value)
+                    formData.append("prompt", document.getElementById("prompt").value)
+
+                    const res = await fetch("/generate", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await res.json();
+                    document.getElementById("apiResult").textContent = data
+                }
+            </script>
+        </body>
+    </html>
+    """
+    return content
