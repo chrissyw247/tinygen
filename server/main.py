@@ -20,6 +20,7 @@ async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
+    # TODO: add a loading indicator
     content = """
     <html>
         <head>

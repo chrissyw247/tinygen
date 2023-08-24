@@ -54,7 +54,6 @@ def generate_validated_diff(prompt, source_code_dict, num_validations=1):
             print("Validation passed!!")
             return diff_string
         else:
-            # TODO: retry generation num_validations times
             print("Validation failed! Retrying ...")
 
     print(f"All {num_validations} validation attemps failed! Returning empty diff.")
