@@ -43,7 +43,7 @@ Baby gen!
 
 3. Query server:
     Example query:
-    ```
+    ```bash
     curl \
         --location 'http://127.0.0.1:8000/generate' \
         --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
@@ -69,7 +69,7 @@ Baby gen!
 ### Query locally running backend
 
 Example query:
-```
+```bash
 curl \
     --location 'http://127.0.0.1:8000/generate' \
     --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
@@ -77,7 +77,7 @@ curl \
 ```
 
 ### Query remote running backend
-```
+```bash
 curl \
     --location 'https://tinygen-christinewang.b4a.run/generate' \
     --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
