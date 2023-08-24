@@ -87,19 +87,19 @@ def generate_validated_diff(prompt, source_code_dict, num_validations=1):
     for i in range(num_validations):
         diff_string = generate_diff(prompt, source_code_dict)
 
-        verification_passed = verify_generated_code(prompt, source_code_dict, diff_string)
+        validation_passed = validate_generated_code(prompt, source_code_dict, diff_string)
 
-        if (verification_passed):
-            print("Verification passed!!")
+        if (validation_passed):
+            print("Validation passed!!")
             return diff_string
         else:
             # TODO: retry generation num_validations times
-            print("Verification failed! Retrying ...")
+            print("Validation failed! Retrying ...")
 
     print(f"All {num_validations} validation attemps failed! Returning empty diff.")
     return ""
 
-def verify_generated_code(prompt, source_code_dict, generated_diff):
+def validate_generated_code(prompt, source_code_dict, generated_diff):
     print(f"source_code_dict: {source_code_dict}")
     print(f"generated_diff: {generated_diff}")
 

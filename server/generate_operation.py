@@ -1,4 +1,3 @@
-from datetime import datetime
 import subprocess
 import os
 import sys
@@ -9,10 +8,9 @@ from llm.basic_model import generate_validated_diff
 from database.operations import write_to_db
 
 def main(repo_url, prompt):
-    current_datetime = datetime.now().strftime('%Y%m%d%H%M%S')
-    clone_repo(repo_url, f"{TEMP_REPO_DIR}_{current_datetime}")
+    # NOTE: prepare variables + workspace. clone repo to temp directory
+    repo_dir = clone_repo(repo_url)
     checkout_branch(DEV_BRANCH_NAME)
-
     source_code_dict = collect_source_code("./")
 
     diff_string = generate_validated_diff(prompt, source_code_dict)
@@ -21,6 +19,6 @@ def main(repo_url, prompt):
 
     # NOTE: Navigate back to original directory and remove the temporary repo
     os.chdir("..")
-    subprocess.run(f"rm -rf {TEMP_REPO_DIR}_{current_datetime}", shell=True, check=True)
+    subprocess.run(f"rm -rf {repo_dir}", shell=True, check=True)
 
     return diff_string
