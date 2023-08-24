@@ -23,11 +23,16 @@ Baby gen!
     pip install -r requirements.txt
     ```
 
+4. Update `.env` with your OpenAI API key
+
 ## Local development
 
 ### Run backend in CLI with live reload
 
-1. Set OPENAI_API_KEY envvar to your OpenAI API key
+1. Set envvars
+    ```bash
+    source .env
+    ```
 
 2. Run server
     ```bash
