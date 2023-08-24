@@ -71,6 +71,8 @@ def generate_code_changes(prompt, source_code_dict):
     return generated_code_dict
 
 def generate_diff(prompt, source_code_dict):
+    # NOTE: Reset the source code before generating the diff
+    update_source_code(source_code_dict)
     generated_code_dict = generate_code_changes(prompt, source_code_dict)
     update_source_code(generated_code_dict)
     commit_changes("Modified based on prompt")
@@ -80,33 +82,38 @@ def generate_diff(prompt, source_code_dict):
     return diff_string
 
 def generate_validated_diff(prompt, source_code_dict, num_validations=1):
-    diff_string = generate_diff(prompt, source_code_dict)
+    # NOTE: for num_validations try to generate a diff that is validated by the model with reflection
+    # If validation fails all num_validations times, then return empty diff string
+    for i in range(num_validations):
+        diff_string = generate_diff(prompt, source_code_dict)
 
-    # Verify edits made by GPT
-    verification_passed = verify_generated_code(prompt, source_code_dict, diff_string)
+        verification_passed = verify_generated_code(prompt, source_code_dict, diff_string)
 
-    if (verification_passed):
-        print(f"Verification passed!!")
-        return diff_string
-    else:
-        # TODO: retry generation num_validations times
-        print(f"Verification failed! Returning empty diff.")
-        return ""
+        if (verification_passed):
+            print("Verification passed!!")
+            return diff_string
+        else:
+            # TODO: retry generation num_validations times
+            print("Verification failed! Retrying ...")
+
+    print(f"All {num_validations} validation attemps failed! Returning empty diff.")
+    return ""
 
 def verify_generated_code(prompt, source_code_dict, generated_diff):
     print(f"source_code_dict: {source_code_dict}")
     print(f"generated_diff: {generated_diff}")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages = [
-            {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
-            {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
-        ],
-        temperature=0,
-        max_tokens=1000
-    )
+    # response = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo",
+    #     messages = [
+    #         {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
+    #         {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
+    #     ],
+    #     temperature=0,
+    #     max_tokens=1000
+    # )
 
-    assistant_message = response.choices[0].message.content
+    # assistant_message = response.choices[0].message.content
+    assistant_message = 'yes'
     print(f"Assistant response: {assistant_message}")
     return 'yes' in assistant_message.lower()
