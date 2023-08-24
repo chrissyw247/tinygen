@@ -42,7 +42,14 @@ def generate_diff(prompt, source_code_dict):
     diff_string = get_diff_string("main", DEV_BRANCH_NAME)
     return diff_string
 
-def generate_validated_diff(prompt, source_code_dict, num_validations=1):
+def generate_validated_diff(prompt, source_code_dict, num_validations=0):
+    if os.getenv("NUM_VALIDATIONS"):
+        num_validations = os.getenv("NUM_VALIDATIONS")
+
+    if num_validations is 0:
+        diff_string = generate_diff(prompt, source_code_dict)
+        return diff_string
+
     # NOTE: for num_validations try to generate a diff that is validated by the model with reflection
     # If validation fails all num_validations times, then return empty diff string
     for i in range(num_validations):
