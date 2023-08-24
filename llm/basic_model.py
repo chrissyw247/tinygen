@@ -36,7 +36,8 @@ def parse_source_code_str(source_code_str, filenames):
             end_pos = len(source_code_str)
 
         # Extract content and update the dictionary
-        content = source_code_str[start_pos:end_pos]
+        # NOTE: Subtract 1 from the end_pos to account for \n separator
+        content = source_code_str[start_pos:end_pos-1]
         source_code_dict[filename] = content
 
         # Update the current position for the next iteration
