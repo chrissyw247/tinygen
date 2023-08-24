@@ -20,7 +20,6 @@ async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    # TODO: add a loading indicator
     content = """
     <html>
         <head>
@@ -36,10 +35,19 @@ async def read_root(request: Request):
 
                 <button type="button" onclick="fetchData()">Generate diff</button>
             </form>
+
+            <!-- Loading indicator -->
+            <div id="loadingIndicator" style="display: none;">Loading...</div>
+
             <pre id="apiResult"></pre>
 
             <script>
                 async function fetchData() {
+                    document.getElementById("apiResult").textContent = ""
+
+                    // Show the loading indicator
+                    document.getElementById("loadingIndicator").style.display = "block";
+
                     const formData = new FormData();
                     formData.append("repo_url", document.getElementById("repoUrl").value)
                     formData.append("prompt", document.getElementById("prompt").value)
@@ -50,6 +58,10 @@ async def read_root(request: Request):
                     });
 
                     const data = await res.json();
+
+                    // Hide the loading indicator
+                    document.getElementById("loadingIndicator").style.display = "none";
+
                     document.getElementById("apiResult").textContent = data
                 }
             </script>
