@@ -47,6 +47,7 @@ def generate_validated_diff(prompt, source_code_dict, num_validations=0):
         num_validations = os.getenv("NUM_VALIDATIONS")
 
     if num_validations is 0:
+        print(f"Number of validations is 0, skipping validation step.")
         diff_string = generate_diff(prompt, source_code_dict)
         return diff_string
 
