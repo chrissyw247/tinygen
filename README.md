@@ -2,7 +2,11 @@
 
 ## Description
 
-Baby gen!
+Baby gen! 🐣
+
+## Live UI
+
+Visit the UI at https://tinygen-christinewang.b4a.run!
 
 ## One Time Set-Up
 
@@ -46,8 +50,8 @@ Baby gen!
     ```bash
     curl \
         --location 'http://127.0.0.1:8000/generate' \
-        --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
-        --form 'prompt="I feel like the handling of the sys imports is weird? help clean it up?"'
+        --form 'repo_url="https://github.com/jayhack/llm.sh"' \
+        --form 'prompt="add a check for which os type"'
     ```
 
 ### Run backend using Docker
@@ -72,14 +76,14 @@ Example query:
 ```bash
 curl \
     --location 'http://127.0.0.1:8000/generate' \
-    --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
-    --form 'prompt="I feel like the handling of the sys imports is weird? help clean it up?"'
+    --form 'repo_url="https://github.com/jayhack/llm.sh"' \
+    --form 'prompt="add a check for which os type"'
 ```
 
 ### Query remote running backend
 ```bash
 curl \
     --location 'https://tinygen-christinewang.b4a.run/generate' \
-    --form 'repo_url="https://github.com/chrissyw247/tinygen"' \
-    --form 'prompt="I feel like the handling of the sys imports is weird? help clean it up?"'
+    --form 'repo_url="https://github.com/jayhack/llm.sh"' \
+    --form 'prompt="add a check for which os type"'
 ```

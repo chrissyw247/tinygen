@@ -28,10 +28,10 @@ async def read_root(request: Request):
         <body>
             <form id="queryForm">
                 <label for="repoUrl">Repo URL:</label>
-                <input type="text" id="repoUrl" name="repoUrl" value="https://github.com/chrissyw247/tinygen"><br><br>
+                <input type="text" id="repoUrl" name="repoUrl" value="https://github.com/jayhack/llm.sh"><br><br>
 
                 <label for="prompt">Prompt:</label>
-                <input type="text" id="prompt" name="prompt" value="Print goodbye world instead"><br><br>
+                <input type="text" id="prompt" name="prompt" value="add a check for which os type"><br><br>
 
                 <button type="button" onclick="fetchData()">Generate diff</button>
             </form>
