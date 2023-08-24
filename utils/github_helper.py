@@ -1,5 +1,10 @@
+from fastapi import HTTPException
 import subprocess
 import os
+
+def validate_repo_url(repo_url):
+    if "github.com" not in repo_url:
+        raise HTTPException(status_code=400, detail="Invalid GitHub repository URL")
 
 def clone_repo(repo_url, repo_dir):
     clone_command = f"git clone {repo_url} {repo_dir}"
