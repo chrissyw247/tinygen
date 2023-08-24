@@ -45,7 +45,7 @@ async def read_root(request: Request):
 
             <script>
                 async function fetchData() {
-                    # NOTE: clear existing response + show loading indicator
+                    // NOTE: clear existing response + show loading indicator
                     document.getElementById("apiResult").textContent = ""
                     document.getElementById("loadingIndicator").style.display = "block";
 
