@@ -27,13 +27,15 @@ async def read_root(request: Request):
         </head>
         <body>
             <form id="queryForm">
-                <label for="repoUrl">Repo URL:</label>
-                <input type="text" id="repoUrl" name="repoUrl" value="https://github.com/jayhack/llm.sh"><br><br>
+                <div style="display: flex; flex-direction: column">
+                    <label for="repoUrl">Repo URL:</label>
+                    <input style="width: 500px; display: inline-block" type="text" id="repoUrl" name="repoUrl" value="https://github.com/jayhack/llm.sh"><br><br>
 
-                <label for="prompt">Prompt:</label>
-                <input type="text" id="prompt" name="prompt" value="add a check for which os type"><br><br>
+                    <label for="prompt">Prompt:</label>
+                    <textarea style="width: 500px; display: inline-block" rows="10" columns="50" id="prompt" name="prompt">add a check for which os type</textarea><br><br>
 
-                <button type="button" onclick="fetchData()">Generate diff</button>
+                    <button style="width: 200px" type="button" onclick="fetchData()">Generate diff</button>
+                </div>
             </form>
 
             <!-- Loading indicator -->
