@@ -60,7 +60,7 @@ def generate_code_changes(prompt, source_code_str):
     except openai.error.InvalidRequestError as e:
         raise HTTPException(status_code=400, detail="Github repo is too large :(")
 
-    generated_code_str = response.choices[0].text.strip()
+    generated_code_str = response.choices[0].text
     return generated_code_str
 
 def generate_validated_code_changes(prompt, source_code_dict, num_validations=1):
