@@ -63,17 +63,16 @@ def validate_generated_code(prompt, source_code_dict, generated_diff):
     print(f"source_code_dict: {source_code_dict}")
     print(f"generated_diff: {generated_diff}")
 
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo",
-    #     messages = [
-    #         {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
-    #         {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
-    #     ],
-    #     temperature=0,
-    #     max_tokens=1000
-    # )
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages = [
+            {"role": "system", "content": f"{format_source_code_str(source_code_dict)}"},
+            {"role": "user", "content": f"For the prompt: {prompt} this is the diff that GPT came up with: {generated_diff}. Does this look good? Respond yes or no."},
+        ],
+        temperature=0,
+        max_tokens=1000
+    )
 
-    # assistant_message = response.choices[0].message.content
-    assistant_message = 'yes'
+    assistant_message = response.choices[0].message.content
     print(f"Assistant response: {assistant_message}")
     return 'yes' in assistant_message.lower()
