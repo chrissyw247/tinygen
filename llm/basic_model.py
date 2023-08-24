@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 import subprocess
 import openai
 import os
@@ -46,14 +47,19 @@ def parse_source_code_str(source_code_str, filenames):
 def generate_code_changes(prompt, source_code_dict):
     source_code_str = format_source_code_str(source_code_dict)
     filenames = list(source_code_dict.keys())
+    response = {}
 
-    response = openai.Edit.create(
-        engine="code-davinci-edit-001",
-        input=source_code_str,
-        instruction=prompt,
-        temperature=0,
-        top_p=1
-    )
+    try:
+        response = openai.Edit.create(
+            engine="code-davinci-edit-001",
+            input=source_code_str,
+            instruction=prompt,
+            temperature=0,
+            top_p=1
+        )
+    except openai.error.InvalidRequestError as e:
+        raise HTTPException(status_code=400, detail="Github repo is too large :(")
+
     generated_code_str = response.choices[0].text.strip()
     generated_code_dict = parse_source_code_str(generated_code_str, filenames)
     print(f"GPT generated code: {json.dumps(generated_code_dict, indent=4)}")

@@ -7,6 +7,7 @@ app = FastAPI()
 async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
     # Validate the GitHub URL
     # TODO: input validation move to separate helper
+    # TODO: wrap in try catch
     if "github.com" not in repo_url:
         raise HTTPException(status_code=400, detail="Invalid GitHub repository URL")
 
