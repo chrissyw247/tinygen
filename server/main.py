@@ -57,13 +57,30 @@ async def read_root(request: Request):
                         </div>
                     </form>
 
-                    <div style="display: none; color: #D4A121" id="loadingIndicator">Loading...</div>
+                    <div style="display: none;" id="loadingIndicator">
+                        <div class="spinner"></div>
+                    </div>
 
                     <pre style="color: green; white-space: pre-wrap" id="generatedDiff"></pre>
                     <span style="color: red" id="apiError"></span>
 
                 </div>
             </div>
+
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                .spinner {
+                    border: 4px solid rgba(0, 0, 0, 0.1);
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border-top-color: #D4A121;
+                    animation: spin 1s linear infinite;
+                }
+            </style>
 
             <script>
                 async function fetchData() {
