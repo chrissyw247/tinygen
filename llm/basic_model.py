@@ -24,7 +24,7 @@ def generate_code_changes(prompt, source_code_dict):
             top_p=1
         )
     except openai.error.InvalidRequestError as e:
-        raise_standard_error(400, "Github repo is too large :(")
+        raise_standard_error(400, "Repo and/or prompt is too large :(")
 
     generated_code_str = response.choices[0].text
     filenames = list(source_code_dict.keys())
