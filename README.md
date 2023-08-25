@@ -35,7 +35,7 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
 
 1. Set envvars
     ```bash
-    source .env
+    set -a; source .env; set +a;
     ```
 
 2. Run server
