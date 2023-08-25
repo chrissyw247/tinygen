@@ -104,7 +104,11 @@ async def read_root(request: Request):
                     if (data.hasOwnProperty("detail")) {
                         document.getElementById("apiError").textContent = `Error: ${data.detail}`;
                     } else {
-                        document.getElementById("generatedDiff").textContent = data
+                        if (data === "") {
+                            document.getElementById("generatedDiff").textContent = "No diff 🧹"
+                        } else {
+                            document.getElementById("generatedDiff").textContent = data;
+                        }
                     }
 
                     // NOTE: clear loading indicator

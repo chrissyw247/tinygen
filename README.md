@@ -91,3 +91,5 @@ curl \
 - Cannot handle long prompts b/c it does a single GPT query with a 3000 token limit
 - Code generation only covers code files.
 - Code vs non code files are filtered using a simple algorithm that checks the file extension.
+- Does not handle code changes that rename files
+- Does not show diffs that are whitespace only
