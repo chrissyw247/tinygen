@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from . import generate_operation
 import sys
 sys.path.append('..')
@@ -7,6 +8,8 @@ from utils.github_helper import validate_repo_url
 from utils.error_helper import raise_standard_error
 
 app = FastAPI()
+
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 @app.post("/generate")
 async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
@@ -28,6 +31,7 @@ async def read_root(request: Request):
     <html>
         <head>
             <title>TinyGen</title>
+            <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
         </head>
         <body>
             <div style="display: flex; justify-content: space-between; margin: 20px;">
