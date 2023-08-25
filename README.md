@@ -27,7 +27,7 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
     pip install -r requirements.txt
     ```
 
-4. Update `.env` with your OpenAI API key
+4. Create a `.env` file and set the envvar `OPENAI_API_KEY` to your OpenAI API key
 
 ## Local development
 
@@ -56,14 +56,12 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
 
 ### Run backend using Docker
 
-1. Update `.env` file with your `OPENAI_API_KEY` key.
-
-2. Build image
+1. Build image
     ```bash
     docker build -t tinygen .
     ```
 
-3. Run image
+2. Run image
     ```bash
     docker run --env-file ./.env -p 8000:8000 tinygen
     ```
