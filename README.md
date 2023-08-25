@@ -66,7 +66,11 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
     docker run --env-file ./.env -p 8000:8000 tinygen
     ```
 
-## Querying backend
+### Viewing AI
+
+View the locally running UI at: http://127.0.0.1:8000.
+
+## Querying API
 
 ### Query locally running backend
 
