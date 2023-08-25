@@ -4,17 +4,19 @@ from . import generate_operation
 import sys
 sys.path.append('..')
 from utils.github_helper import validate_repo_url
+from utils.error_helper import raise_standard_error
 
 app = FastAPI()
 
 @app.post("/generate")
 async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
-    validate_repo_url(repo_url)
-
     print(f"/generic endpoint recieved a request with repo_url: {repo_url} + prompt: {prompt}")
-
-    # TODO: wrap in try catch
-    diff_string = generate_operation.main(repo_url, prompt)
+    validate_repo_url(repo_url)
+    diff_string = ""
+    try:
+        diff_string = generate_operation.main(repo_url, prompt)
+    except Exception as e:
+        raise_standard_error(500, e)
 
     return diff_string
 
