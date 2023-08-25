@@ -59,8 +59,8 @@ async def read_root(request: Request):
 
                     <div style="display: none; color: #D4A121" id="loadingIndicator">Loading...</div>
 
-                    <pre style="color: green" id="generatedDiff"></pre>
-                    <pre style="color: red" id="apiError"></pre>
+                    <pre style="color: green; white-space: pre-wrap" id="generatedDiff"></pre>
+                    <span style="color: red" id="apiError"></span>
 
                 </div>
             </div>
