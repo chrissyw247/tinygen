@@ -25,7 +25,7 @@ async def read_root(request: Request):
     content = """
     <html>
         <head>
-            <title>TinyGen UI</title>
+            <title>TinyGen</title>
         </head>
         <body>
             <form id="queryForm">
