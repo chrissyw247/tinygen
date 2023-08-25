@@ -89,3 +89,8 @@ curl \
     --form 'repo_url="https://github.com/jayhack/llm.sh"' \
     --form 'prompt="add a check for which os type"'
 ```
+
+# Limitations
+- Cannot handle large repos b/c it does a single GPT query with a 3000 token limit
+- Code generation only covers code files.
+- Code vs non code files are filtered using a simple algorithm that checks the file extension.
