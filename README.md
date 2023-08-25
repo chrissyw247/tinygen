@@ -64,14 +64,9 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
 
 ### Run backend using Docker
 
-1. Build image
+1. Run server
     ```bash
-    docker build -t tinygen .
-    ```
-
-2. Run image
-    ```bash
-    docker run --env-file ./.env -p 8000:8000 tinygen
+    docker-compose up --build
     ```
 
 ### Viewing UI
