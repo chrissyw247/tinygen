@@ -53,7 +53,7 @@ async def read_root(request: Request):
                             <label for="prompt">Prompt:</label>
                             <textarea rows="10" columns="50" id="prompt" name="prompt">add a check for which os type</textarea><br><br>
 
-                            <button style="width: 40%; height: 30px; background-color: palegreen" type="button" onclick="fetchData()">Generate diff</button>
+                            <button style="width: 40%; height: 30px; background-color: palegreen" type="button" onclick="fetchData()">GENERATE DIFF!</button>
                         </div>
                     </form>
 
