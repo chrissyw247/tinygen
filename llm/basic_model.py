@@ -68,8 +68,8 @@ def generate_validated_diff(prompt, source_code_dict, num_validations=0):
     return ""
 
 def validate_generated_code(prompt, source_code_dict, generated_diff):
-    print(f"source_code_dict: {source_code_dict}")
-    print(f"generated_diff: {generated_diff}")
+    # print(f"source_code_dict: {source_code_dict}")
+    # print(f"generated_diff: {generated_diff}")
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
