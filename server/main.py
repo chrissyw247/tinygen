@@ -14,9 +14,9 @@ app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 @app.post("/generate")
 async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
     print(f"/generic endpoint recieved a request with repo_url: {repo_url} + prompt: {prompt}")
-    validate_repo_url(repo_url)
     diff_string = ""
     try:
+        validate_repo_url(repo_url)
         diff_string = generate_operation.main(repo_url, prompt)
     except HTTPException as he:
         raise_standard_error(he.status_code, he.detail)
