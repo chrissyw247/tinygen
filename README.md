@@ -53,15 +53,6 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
 
     This command will start the server at http://127.0.0.1:8000
 
-3. Query server:
-    Example query:
-    ```bash
-    curl \
-        --location 'http://127.0.0.1:8000/generate' \
-        --form 'repo_url="https://github.com/jayhack/llm.sh"' \
-        --form 'prompt="add a check for which os type"'
-    ```
-
 ### Run backend using Docker
 
 1. Run server
@@ -69,7 +60,9 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
     docker-compose up --build
     ```
 
-### Viewing UI
+    This command will start the server at http://127.0.0.1:8000
+
+## Viewing UI
 
 View the locally running UI at: http://127.0.0.1:8000.
 
@@ -95,5 +88,6 @@ curl \
 
 ## Limitations
 - Cannot handle large repos b/c it does a single GPT query with a 3000 token limit
+- Cannot handle long prompts b/c it does a single GPT query with a 3000 token limit
 - Code generation only covers code files.
 - Code vs non code files are filtered using a simple algorithm that checks the file extension.
