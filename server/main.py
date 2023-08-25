@@ -39,14 +39,16 @@ async def read_root(request: Request):
             </form>
 
             <!-- Loading indicator -->
-            <div id="loadingIndicator" style="display: none;">Loading...</div>
+            <div style="display: none; color: #D4A121" id="loadingIndicator">Loading...</div>
 
-            <pre id="apiResult"></pre>
+            <pre style="color: green" id="generatedDiff"></pre>
+            <pre style="color: red" id="apiError"></pre>
 
             <script>
                 async function fetchData() {
                     // NOTE: clear existing response + show loading indicator
-                    document.getElementById("apiResult").textContent = ""
+                    document.getElementById("generatedDiff").textContent = ""
+                    document.getElementById("apiError").textContent = ""
                     document.getElementById("loadingIndicator").style.display = "block";
 
                     const formData = new FormData();
@@ -60,10 +62,15 @@ async def read_root(request: Request):
 
                     const data = await res.json();
 
-                    // NOTE: clear loading indicator + display result
+                    // NOTE: check if the returned object contains a "detail" key, which indicates an error
+                    if (data.hasOwnProperty("detail")) {
+                        document.getElementById("apiError").textContent = `Error: ${data.detail}`;
+                    } else {
+                        document.getElementById("generatedDiff").textContent = data
+                    }
+
+                    // NOTE: clear loading indicator
                     document.getElementById("loadingIndicator").style.display = "none";
-                    // TODO: display errors correctly
-                    document.getElementById("apiResult").textContent = data
                 }
             </script>
         </body>
