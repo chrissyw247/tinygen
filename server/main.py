@@ -30,23 +30,36 @@ async def read_root(request: Request):
             <title>TinyGen</title>
         </head>
         <body>
-            <form id="queryForm">
-                <div style="display: flex; flex-direction: column">
-                    <label for="repoUrl">Repo URL:</label>
-                    <input style="width: 500px; display: inline-block" type="text" id="repoUrl" name="repoUrl" value="https://github.com/jayhack/llm.sh"><br><br>
-
-                    <label for="prompt">Prompt:</label>
-                    <textarea style="width: 500px; display: inline-block" rows="10" columns="50" id="prompt" name="prompt">add a check for which os type</textarea><br><br>
-
-                    <button style="width: 200px" type="button" onclick="fetchData()">Generate diff</button>
+            <div style="display: flex; justify-content: space-between; margin: 20px;">
+                <div style="flex: 1; margin-right: 50px">
+                    <h2 style="margin-top: 0">TinyGen</h2>
+                    <p>TinyGen lets you generate code changes automagically with GPT!</p>
+                    <p>To use follow these instructions:</p>
+                    <ol>
+                        <li>Enter the repository URL you would like to update in the "Repo URL" field</li>
+                        <li>Enter what code changes you would like in the "Prompt" field.</li>
+                    </ol>
                 </div>
-            </form>
+                <div style="flex: 2;" >
+                    <form id="queryForm">
+                        <div style="display: flex; flex-direction: column">
+                            <label for="repoUrl">Repo URL:</label>
+                            <input  type="text" id="repoUrl" name="repoUrl" value="https://github.com/jayhack/llm.sh"><br><br>
 
-            <!-- Loading indicator -->
-            <div style="display: none; color: #D4A121" id="loadingIndicator">Loading...</div>
+                            <label for="prompt">Prompt:</label>
+                            <textarea rows="10" columns="50" id="prompt" name="prompt">add a check for which os type</textarea><br><br>
 
-            <pre style="color: green" id="generatedDiff"></pre>
-            <pre style="color: red" id="apiError"></pre>
+                            <button style="width: 40%; height: 30px; background-color: palegreen" type="button" onclick="fetchData()">Generate diff</button>
+                        </div>
+                    </form>
+
+                    <div style="display: none; color: #D4A121" id="loadingIndicator">Loading...</div>
+
+                    <pre style="color: green" id="generatedDiff"></pre>
+                    <pre style="color: red" id="apiError"></pre>
+
+                </div>
+            </div>
 
             <script>
                 async function fetchData() {
