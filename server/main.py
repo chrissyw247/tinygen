@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from . import generate_operation
 import sys
@@ -15,8 +15,10 @@ async def generate(repo_url: str = Form(...), prompt: str = Form(...)):
     diff_string = ""
     try:
         diff_string = generate_operation.main(repo_url, prompt)
+    except HTTPException as he:
+        raise_standard_error(he.status_code, he.detail)
     except Exception as e:
-        raise_standard_error(500, e)
+        raise_standard_error(500, str(e))
 
     return diff_string
 
