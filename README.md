@@ -10,16 +10,18 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
 
 ## One Time Set-Up
 
+⛔️ Set-up instructions assume you are on Mac OS ⛔️
+
 1. Clone this repository:
     ```
-    git clone [repository-url]
+    git clone https://github.com/chrissyw247/tinygen
     ```
 
 2. Navigate to the project directory and activate a virtual environment:
     ```bash
-    cd my-python-project
-    python3 -m venv venv
-    source venv/bin/activate # On Windows, use `.\myenv\Scripts\activate`
+    cd tinygen
+    python -m venv venv
+    source venv/bin/activate
     ```
 
 3. Install the requirements:
@@ -28,8 +30,14 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
     ```
 
 4. Create a `.env` file and set the envvar `OPENAI_API_KEY` to your OpenAI API key
+    ```bash
+    touch .env
+    echo 'OPENAI_API_KEY="<your-openai-api-key>"' >> .env # Replace <your-openai-api-key> with actual API key
+    ```
 
 ## Local development
+
+⛔️ Local development instructions assume you are on Mac OS ⛔️
 
 ### Run backend in CLI with live reload
 
@@ -66,7 +74,7 @@ Visit the UI at https://tinygen-christinewang.b4a.run!
     docker run --env-file ./.env -p 8000:8000 tinygen
     ```
 
-### Viewing AI
+### Viewing UI
 
 View the locally running UI at: http://127.0.0.1:8000.
 
@@ -90,7 +98,7 @@ curl \
     --form 'prompt="add a check for which os type"'
 ```
 
-# Limitations
+## Limitations
 - Cannot handle large repos b/c it does a single GPT query with a 3000 token limit
 - Code generation only covers code files.
 - Code vs non code files are filtered using a simple algorithm that checks the file extension.
