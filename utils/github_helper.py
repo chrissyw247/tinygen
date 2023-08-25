@@ -1,14 +1,14 @@
 from datetime import datetime
-from fastapi import HTTPException
 import subprocess
 import os
+from utils.error_helper import raise_standard_error
 
 TEMP_REPO_DIR="temp_repo"
 DEV_BRANCH_NAME="new_branch"
 
 def validate_repo_url(repo_url):
     if "github.com" not in repo_url:
-        raise HTTPException(status_code=400, detail="Invalid GitHub repository URL")
+        raise_standard_error(400, "Invalid GitHub repository URL")
 
 def clone_repo(repo_url, repo_dir=None):
     if not repo_dir:

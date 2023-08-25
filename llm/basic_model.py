@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 import subprocess
 import openai
 import os
@@ -8,6 +7,7 @@ sys.path.append('..')
 from llm.message_parser import format_source_code_str, parse_source_code_str
 from utils.file_io_helper import update_source_code
 from utils.github_helper import commit_changes, get_diff_string, DEV_BRANCH_NAME
+from utils.error_helper import raise_standard_error
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -24,7 +24,7 @@ def generate_code_changes(prompt, source_code_dict):
             top_p=1
         )
     except openai.error.InvalidRequestError as e:
-        raise HTTPException(status_code=400, detail="Github repo is too large :(")
+        raise_standard_error(400, "Github repo is too large :(")
 
     generated_code_str = response.choices[0].text
     filenames = list(source_code_dict.keys())
