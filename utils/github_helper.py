@@ -31,6 +31,6 @@ def commit_changes(commit_message):
     subprocess.run(f"git commit -m '{commit_message}'", shell=True, check=False)
 
 def get_diff_string(src_branch, dest_branch):
-    result = subprocess.run(f"git diff {src_branch}..{dest_branch}", shell=True, check=True, capture_output=True, text=True)
+    result = subprocess.run(f"git diff --ignore-all-space {src_branch}..{dest_branch}", shell=True, check=True, capture_output=True, text=True)
     diff_output = result.stdout
     return diff_output
